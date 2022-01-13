@@ -1,0 +1,2 @@
+# kuaigo
+test go
