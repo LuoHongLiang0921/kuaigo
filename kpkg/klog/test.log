@@ -1,0 +1,2 @@
+{"level":"error","ts":1642146786.420994,"msg":"Error fetching url..{url 15 0 www.google.com <nil>} {error 26 0  Get \"www.google.com\": unsupported protocol scheme \"\"}"}
+{"level":"info","ts":1642146786.604907,"msg":"Success..{statusCode 15 0 200 OK <nil>} {url 15 0 http://www.google.com <nil>}"}
