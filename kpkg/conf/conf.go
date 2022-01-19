@@ -2,8 +2,8 @@ package conf
 
 import (
 	"fmt"
-	"github.com/LuoHongLiang0921/kuaigo/kutils/kcast"
-	"github.com/LuoHongLiang0921/kuaigo/kutils/kmap"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/kutils/kcast"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/kutils/kmap"
 	"io"
 	"io/ioutil"
 	"reflect"

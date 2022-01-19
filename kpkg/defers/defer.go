@@ -1,7 +1,7 @@
 package defers
 
 import (
-	"github.com/LuoHongLiang0921/kuaigo/kutils/kdefer"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/kutils/kdefer"
 )
 
 var (

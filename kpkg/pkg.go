@@ -3,13 +3,12 @@ package kpkg
 import (
 	"fmt"
 	"github.com/LuoHongLiang0921/kuaigo/kpkg/constant"
-	"github.com/LuoHongLiang0921/kuaigo/kutils/kcolor"
-	"github.com/LuoHongLiang0921/kuaigo/kutils/ktime"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/kutils/kcolor"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/kutils/ktime"
 	"os"
 	"path/filepath"
 	"runtime"
 	"time"
-
 )
 
 const tabbyVersion = "0.0.6"

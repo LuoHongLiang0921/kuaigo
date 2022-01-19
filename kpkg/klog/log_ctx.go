@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/LuoHongLiang0921/kuaigo/kpkg/conf"
 	"github.com/LuoHongLiang0921/kuaigo/kpkg/defers"
-	"github.com/LuoHongLiang0921/kuaigo/kutils/kcolor"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/kutils/kcolor"
 	"regexp"
 
 	"github.com/pborman/uuid"

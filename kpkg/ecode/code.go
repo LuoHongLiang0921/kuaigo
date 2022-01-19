@@ -2,12 +2,11 @@ package ecode
 
 import (
 	"context"
-	"github.com/LuoHongLiang0921/kuaigo/core/net/xhttp"
 	"github.com/LuoHongLiang0921/kuaigo/kpkg/conf"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/core/net/xhttp"
 	"github.com/LuoHongLiang0921/kuaigo/kpkg/klog"
 	nhttp "net/http"
 	"sync"
-
 )
 
 // EcodeNum 低于10000均为系统错误码，业务错误码请使用10000以上
