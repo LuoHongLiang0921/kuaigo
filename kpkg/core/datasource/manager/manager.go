@@ -8,9 +8,8 @@ package manager
 
 import (
 	"errors"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/conf"
 	"net/url"
-
-	"git.bbobo.com/framework/tabby/pkg/conf"
 )
 
 var (

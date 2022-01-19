@@ -2,11 +2,10 @@ package http
 
 import (
 	"context"
-
-	"git.bbobo.com/framework/tabby/pkg/conf"
-	"git.bbobo.com/framework/tabby/pkg/core/datasource/manager"
-	"git.bbobo.com/framework/tabby/pkg/flag"
-	"git.bbobo.com/framework/tabby/pkg/xlog"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/conf"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/core/datasource/manager"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/flag"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/klog"
 )
 
 // Defines http/https scheme
@@ -22,7 +21,7 @@ func init() {
 			configAddr  = flag.String("config")
 		)
 		if configAddr == "" {
-			xlog.Panic(context.TODO(), "new http dataSource, configAddr is empty")
+			klog.Panic(context.TODO(), "new http dataSource, configAddr is empty")
 			return nil
 		}
 		return NewDataSource(configAddr, watchConfig)

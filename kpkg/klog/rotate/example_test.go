@@ -7,9 +7,9 @@
 package rotate_test
 
 import (
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/klog/rotate"
 	"log"
 
-	"git.bbobo.com/framework/tabby/pkg/xlog/rotate"
 )
 
 // To use rotate with the standard library's log package, just pass it into

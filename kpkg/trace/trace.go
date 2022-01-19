@@ -8,8 +8,8 @@ package trace
 
 import (
 	"context"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/klog"
 
-	"git.bbobo.com/framework/tabby/pkg/xlog"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/log"
 )
@@ -21,7 +21,7 @@ var (
 
 // SetGlobalTracer ...
 func SetGlobalTracer(tracer opentracing.Tracer) {
-	xlog.Info(context.TODO(), "set global tracer", xlog.FieldMod("trace"))
+	klog.Info(context.TODO(), "set global tracer", klog.FieldMod("trace"))
 	opentracing.SetGlobalTracer(tracer)
 }
 

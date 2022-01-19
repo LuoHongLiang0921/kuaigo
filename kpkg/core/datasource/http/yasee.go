@@ -11,11 +11,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/klog"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/kutils/kgo"
 	"strconv"
 	"time"
 
-	"git.bbobo.com/framework/tabby/pkg/util/xgo"
-	"git.bbobo.com/framework/tabby/pkg/xlog"
 	"github.com/go-resty/resty/v2"
 )
 
@@ -53,7 +53,7 @@ func NewDataSource(addr string, enableWatch bool) *yaseeDataSource {
 		enableWatch: enableWatch,
 	}
 	if enableWatch {
-		xgo.Go(yasee.watch)
+		kgo.Go(yasee.watch)
 	}
 	return yasee
 }
@@ -91,23 +91,23 @@ func (y *yaseeDataSource) watch() {
 		// client get err
 		if err != nil {
 			time.Sleep(time.Second * 1)
-			xlog.Error(y.getContext(), "yaseeDataSource", xlog.String("listenConfig curl err", err.Error()))
+			klog.Error(y.getContext(), "yaseeDataSource", klog.String("listenConfig curl err", err.Error()))
 			continue
 		}
 		if resp.StatusCode() != 200 {
 			time.Sleep(time.Second * 1)
-			xlog.Error(y.getContext(), "yaseeDataSource", xlog.String("listenConfig status err", resp.Status()))
+			klog.Error(y.getContext(), "yaseeDataSource", klog.String("listenConfig status err", resp.Status()))
 		}
 		var yaseeRes yaseeRes
 		if err := json.Unmarshal(resp.Body(), &yaseeRes); err != nil {
 			time.Sleep(time.Second * 1)
-			xlog.Error(y.getContext(), "yaseeDataSource", xlog.String("unmarshal err", err.Error()))
+			klog.Error(y.getContext(), "yaseeDataSource", klog.String("unmarshal err", err.Error()))
 			continue
 		}
 		// default code != 200 means not change
 		if yaseeRes.Code != 200 {
 			time.Sleep(time.Second * 1)
-			xlog.Info(y.getContext(), "yaseeDataSource", xlog.Int64("code", int64(yaseeRes.Code)))
+			klog.Info(y.getContext(), "yaseeDataSource", klog.Int64("code", int64(yaseeRes.Code)))
 			continue
 		}
 		select {
@@ -115,7 +115,7 @@ func (y *yaseeDataSource) watch() {
 			// record the config change data
 			y.data = yaseeRes.Data.Content
 			y.lastRevision = yaseeRes.Data.LastRevision
-			xlog.Info(y.getContext(), "yaseeDataSource", xlog.String("change", yaseeRes.Data.Content))
+			klog.Info(y.getContext(), "yaseeDataSource", klog.String("change", yaseeRes.Data.Content))
 		default:
 		}
 	}

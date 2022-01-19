@@ -9,9 +9,9 @@ package trace_test
 import (
 	"context"
 	"fmt"
+	"github.com/LuoHongLiang0921/kuaigo/kpkg/trace"
 	"time"
 
-	"git.bbobo.com/framework/tabby/pkg/trace"
 )
 
 func ExampleTraceFunc() {
