@@ -1,14 +1,10 @@
 // @Description
-// @Author yixia
-// @Copyright 2021 sndks.com. All rights reserved.
-// @LastModify 2021/1/14 5:21 下午
 
 package rotate_test
 
 import (
+	rotate2 "github.com/LuoHongLiang0921/kuaigo/pkg/util/klog/rotate"
 	"log"
-
-	rotate2 "git.bbobo.com/framework/tabby/pkg/util/xlog/rotate"
 )
 
 // To use rotate with the standard library's log package, just pass it into

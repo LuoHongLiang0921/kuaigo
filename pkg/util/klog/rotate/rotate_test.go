@@ -1,7 +1,4 @@
 // @Description
-// @Author yixia
-// @Copyright 2021 sndks.com. All rights reserved.
-// @LastModify 2021/1/14 5:21 下午
 
 // +build linux
 
@@ -13,7 +10,6 @@ import (
 	"os/signal"
 	"syscall"
 
-	rotate2 "git.bbobo.com/framework/tabby/pkg/util/xlog/rotate"
 )
 
 // Example of how to rotate in xresponse to SIGHUP.

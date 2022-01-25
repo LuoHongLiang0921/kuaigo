@@ -6,12 +6,12 @@
 package klog
 
 import (
-	"git.bbobo.com/framework/tabby/pkg/conf"
-	"git.bbobo.com/framework/tabby/pkg/util/xlog/console"
-	"git.bbobo.com/framework/tabby/pkg/util/xlog/file"
-	"git.bbobo.com/framework/tabby/pkg/util/xlog/manager"
-	"git.bbobo.com/framework/tabby/pkg/util/xlog/redis"
-	"git.bbobo.com/framework/tabby/pkg/util/xlog/zap"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/conf"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/util/klog/console"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/util/klog/file"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/util/klog/manager"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/util/klog/redis"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/util/klog/zap"
 	"github.com/mitchellh/mapstructure"
 )
 

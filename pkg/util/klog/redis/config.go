@@ -1,24 +1,19 @@
 // @Description
-// @Author shiyibo
-// @Copyright 2021 sndks.com. All rights reserved.
-// @Datetime 2021/6/29 9:43 上午
 
 package redis
 
 import (
 	"errors"
 	"fmt"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/conf"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/defers"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/util/klog/buffer"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/util/klog/zap"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/util/ktime"
 	"strings"
 	"sync"
 	"time"
 
-	"git.bbobo.com/framework/tabby/pkg/util/xlog/buffer"
-
-	"git.bbobo.com/framework/tabby/pkg/util/xtime"
-
-	"git.bbobo.com/framework/tabby/pkg/conf"
-	"git.bbobo.com/framework/tabby/pkg/defers"
-	"git.bbobo.com/framework/tabby/pkg/util/xlog/zap"
 	"github.com/go-redis/redis"
 	"github.com/mitchellh/mapstructure"
 )
@@ -89,10 +84,10 @@ func (c *Config) LoaSourceConfig() error {
 
 func getDefaultRedisConfig() Config {
 	return Config{
-		DialTimeout:  xtime.Duration("1s"),
-		ReadTimeout:  xtime.Duration("1s"),
-		WriteTimeout: xtime.Duration("1s"),
-		IdleTimeout:  xtime.Duration("60s"),
+		DialTimeout:  ktime.Duration("1s"),
+		ReadTimeout:  ktime.Duration("1s"),
+		WriteTimeout: ktime.Duration("1s"),
+		IdleTimeout:  ktime.Duration("60s"),
 	}
 }
 
@@ -192,7 +187,7 @@ func (c *Config) BuildAlter(alterKey string, enablerFunc zap.LevelEnablerFunc) z
 	errWs := zap.AddSync(errRedisLog)
 	if c.Async {
 		var close buffer.CloseFunc
-		errWs, close = buffer.Buffer(errWs, c.BufferSize, xtime.Duration(c.FlushInterval))
+		errWs, close = buffer.Buffer(errWs, c.BufferSize, ktime.Duration(c.FlushInterval))
 		defers.Register(close)
 	}
 	errorCore := zap.NewCore(encoder(), errWs, zap.LevelEnablerFunc(func(level zap.Level) bool {
@@ -220,7 +215,7 @@ func (c *Config) Build() zap.Core {
 	}
 	if c.Async {
 		var close buffer.CloseFunc
-		rws, close = buffer.Buffer(rws, c.BufferSize, xtime.Duration(c.FlushInterval))
+		rws, close = buffer.Buffer(rws, c.BufferSize, ktime.Duration(c.FlushInterval))
 		defers.Register(close)
 	}
 	redisZapCore := zap.NewCore(encoder(), rws, zap.LevelEnablerFunc(func(level zap.Level) bool {

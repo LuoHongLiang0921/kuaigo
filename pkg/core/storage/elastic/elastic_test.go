@@ -8,9 +8,9 @@ package elastic
 import (
 	"context"
 	"fmt"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/util/kcast"
 	"testing"
 
-	"git.bbobo.com/framework/tabby/pkg/util/xcast"
 	jsoniter "github.com/json-iterator/go"
 	"gopkg.in/olivere/elastic.v6"
 )
@@ -145,10 +145,10 @@ func TestElastic_BulkSaveIndexBody(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		bodyData := make(map[string]interface{})
 		bodyData["demo_id"] = i
-		bodyData["content"] = "demo_bulk" + xcast.ToString(i)
+		bodyData["content"] = "demo_bulk" + kcast.ToString(i)
 		bodyDataString, _ := JSON.MarshalToString(bodyData)
 		bulkData := BulkIndexBody{
-			DocId:    xcast.ToString(i),
+			DocId:    kcast.ToString(i),
 			BodyData: bodyDataString,
 		}
 		bulkBodys = append(bulkBodys, bulkData)

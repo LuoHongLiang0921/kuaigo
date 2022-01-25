@@ -6,9 +6,9 @@
 package klog
 
 import (
+	"github.com/LuoHongLiang0921/kuaigo/pkg/conf"
 	"testing"
 
-	"git.bbobo.com/framework/tabby/pkg/conf"
 	yaml "gopkg.in/yaml.v3"
 
 	"github.com/stretchr/testify/assert"

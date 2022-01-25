@@ -7,14 +7,14 @@ package cache
 
 import (
 	"context"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/conf"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/core/configsource/file"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/core/configsource/manager"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/util/klog"
 	"os"
 	"testing"
 	"time"
 
-	"git.bbobo.com/framework/tabby/pkg/conf"
-	"git.bbobo.com/framework/tabby/pkg/core/configsource/file"
-	"git.bbobo.com/framework/tabby/pkg/core/configsource/manager"
-	"git.bbobo.com/framework/tabby/pkg/util/xlog"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/yaml.v3"
 )
@@ -24,10 +24,10 @@ func Test_cacheManager_GetCache(t *testing.T) {
 	configAddr := os.Getenv("CONFIG_FILE_ADDR")
 	provider, err := manager.NewConfigSource(configAddr)
 	if err == manager.ErrConfigAddr {
-		xlog.Panic(err.Error())
+		klog.Panic(err.Error())
 	}
 	if err := conf.LoadFromConfigSource(provider, yaml.Unmarshal); err != nil {
-		xlog.Panic(err.Error())
+		klog.Panic(err.Error())
 	}
 	ctx := context.Background()
 	GetCacheManagerInstance().GetCache(ctx, "redis").WithContext(ctx).Set("test", 1, 10*time.Second)

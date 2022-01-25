@@ -1,15 +1,11 @@
 // @Description
-// @Author shiyibo
-// @Copyright 2021 sndks.com. All rights reserved.
-// @Datetime 2021/6/30 9:43 上午
 
 package redis
 
 import (
+	"github.com/LuoHongLiang0921/kuaigo/pkg/util/klog/manager"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/util/klog/zap"
 	"sync"
-
-	"git.bbobo.com/framework/tabby/pkg/util/xlog/manager"
-	"git.bbobo.com/framework/tabby/pkg/util/xlog/zap"
 )
 
 const (
