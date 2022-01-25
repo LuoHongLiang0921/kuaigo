@@ -7,7 +7,7 @@ import (
 	"github.com/LuoHongLiang0921/kuaigo/pkg/biz/kentity"
 	"github.com/LuoHongLiang0921/kuaigo/pkg/biz/tcontext"
 	"github.com/LuoHongLiang0921/kuaigo/pkg/constant"
-	"github.com/LuoHongLiang0921/kuaigo/pkg/core/net/xhttp"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/core/net/khttp"
 	"github.com/LuoHongLiang0921/kuaigo/pkg/core/server/ginserver"
 	"github.com/LuoHongLiang0921/kuaigo/pkg/core/storage/redis"
 	"github.com/LuoHongLiang0921/kuaigo/pkg/ecode"

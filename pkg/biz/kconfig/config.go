@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/LuoHongLiang0921/kuaigo/pkg/conf"
-	"github.com/LuoHongLiang0921/kuaigo/pkg/core/net/xhttp"
+	"github.com/LuoHongLiang0921/kuaigo/pkg/core/net/khttp"
 	"github.com/LuoHongLiang0921/kuaigo/pkg/util/klog"
 	"sync"
 	"time"
@@ -79,7 +79,7 @@ func Build(ctx context.Context, key string) *AppConfig {
 	var config AppConfig
 	err := conf.UnmarshalKey(key, &config)
 	if err != nil {
-		klog.TabbyLogger.Panic(fmt.Sprintf("load key %v config centre err:%v", key, err), klog.FieldMod("biz"))
+		klog.KuaigoLogger.Panic(fmt.Sprintf("load key %v config centre err:%v", key, err), klog.FieldMod("biz"))
 		return nil
 	}
 	return &config
