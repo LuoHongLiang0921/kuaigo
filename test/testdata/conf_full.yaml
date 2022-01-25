@@ -1,0 +1,283 @@
+version: v2
+app:
+  serviceName: "demo"
+  appConfig:
+    appId: "112"
+listen:
+  http:
+    host: "0.0.0.0"
+    port: 8080
+  grpc:
+    host: "0.0.0.0"
+    port: 8092
+  governor:
+    host: "0.0.0.0"
+    port: 8090
+    enable: true
+    network: tcp4
+dbs:
+  default:
+    type: mysql
+    connMaxLifetime: 300s
+    autoConnect: true
+    debug: true
+    dsn: >-
+      dev:X#dSZ0PG*B@tcp(10.0.12.157:3306)/tabby-demo?charset=utf8mb4&interpolateParams=true
+    level: panic
+    maxIdleConns: 50
+    maxOpenConns: 100
+    disableTrace: false
+    disableMetric: false
+  default2:
+    type: mysql
+    connMaxLifetime: 300s
+    autoConnect: true
+    debug: false
+    dsn: >-
+      dev:X#dSZ0PG*B@tcp(10.0.12.157:3306)/tabby-demo?charset=utf8mb4&interpolateParams=true
+    level: panic
+    maxIdleConns: 50
+    maxOpenConns: 100
+    disableTrace: false
+    disableMetric: false
+caches:
+  logger:
+    type: redis
+    addr: "192.168.122.201:6379"
+#    addr: "mp-sre-logproxy-new.ops:6379"
+    password: ""
+    dialTimeout: "1s"
+    readTimeout: "3s"
+    writeTimeout: "3s"
+    idleTimeout: "60s"
+  redis:
+    type: redis
+    autoConnect: true
+    addr: "10.0.12.125:6379"
+    password: "TEgutGM0hR"
+    debug: true
+    #   cluster|stub
+    mode: stub
+    dialTimeout: "1s"
+    readTimeout: "3s"
+    writeTimeout: "3s"
+    idleTimeout: "60s"
+mq:
+  trabbit:
+    brokers: [ "amqp://admin:admin@127.0.0.1:5672" ]
+    mode: "rabbitmq"
+    runType: "consumer | publish"
+    rabbit:
+      # 最大空闲连接数
+      maxIdle: 100
+      # 最大活动连接数
+      maxActive: 100
+      # 池中空闲时间 ，每次获取都会清理池中的连接
+      idleTimeout: 2s
+      # MaxConnLifetime 最大存活时间
+      maxConnLifetime: 2s
+      consumer:
+        queue: "tabby.test"
+        consumerTag: ""
+        autoAck: false
+        exclusive: false
+        noLocal: false
+        noWait: false
+        isNackRequeue: false
+        args:
+  tkafka:
+    brokers: [ "127.0.0.1:9092" ]
+    mode: "kafka"
+    runType: "consumer | publish"
+    kafka:
+      version: 1.0.0
+      publisher:
+        async: true
+        # 发布消息超时时间
+        publishTimeout: "5s"
+        # RequiredAcks 0:NoResponse 1:WaitForLocal -1:WaitForAll 默认为 0
+        requiredAcks: 0
+        backoff: "2s"
+        # partitioner random:RandomPartitioner roundRobin:RoundRobinPartitioner hash:HashPartitioner
+        partitioner: "random"
+      consumer:
+        # Topic 名字
+        topic: ["test_kafka"]
+        # OffsetsInitial offset是否从时间最远开始 1:最近 2: 最旧
+        offsetsInitial: 2
+        #GroupID 消费组id,如果为空就是按照不是消费者组来走
+        groupID: "test_group"
+        # Assinor  重平衡分配策略 sticky roundRobin range 默认range
+        assinor: "range"
+#  任务
+tasks:
+  - name: "democron"
+    taskType: "cron"
+    spec: "0 */5 * * * *"
+    isWithSeconds: true
+    isImmediatelyRun: false
+    isDistributedTask: false
+    delayExecType: "skip"
+  - name: "demoJob"
+    taskType: "once"
+  - name: "demoground"
+    taskType: "background"
+logging:
+  # 变量值
+  property:
+#   appId=%{appId} code=%{code} costTime=%{costTime} fileName=%{fileName} line=%{line} logLevel=%{logLevel} msg=%{msg} p=%{p} processCode=%{processCode} requestIp=%{requestIp} requestUri=%{requestUri} serviceName=%{serviceName} serviceSource=%{serviceSource} traceId=%{traceId} uid=%{uid}
+    defaultFormat: "appId=%{appId} serviceName=%{serviceName} serviceSource=%{serviceSource} traceId=%{traceId} fileName=%{fileName} line=%{line} requestIp=%{requestIp} requestUri=%{requestUri}"
+  default:
+    # 和output 字段对应
+    loggerType: "running"
+    async: true
+    level: "debug"
+    #  输出源配置，可以输出多个输出源
+    output:
+      # 文件输出源
+      file:
+        fileName: "./log/default_[Y-m-d].log"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      # redis 输出源
+      redis:
+        source: "caches.logger"
+        key: "running"
+        # 日志级别
+        level: "info"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      # console 输出源
+      console:
+        format: "logging.property.defaultFormat"
+        level: "debug"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+  # 开发日志类型
+  running:
+    async: false
+    level: "debug"
+    loggerType: "running"
+    output:
+      file:
+        fileName: "./log/running_[Y-m-d].log"
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+        # 100MB
+        maxSize: 1
+        # 1d 1天
+        maxAge: 1
+        # 最大备份
+        maxBackup: 10
+        # 日志轮换间隔
+        interval: "10m"
+        async: true
+        level: debug
+      redis:
+        source: "caches.logger"
+        # es index
+        key: "running"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      console:
+        format: "logging.property.defaultFormat"
+        level: "debug"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+  # 访问日志
+  access:
+    async: true
+    level: "debug"
+    loggerType: "access"
+    output:
+      redis:
+        source: "caches.logger"
+        key: "access"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      file:
+        fileName: "./log/access_[Y-m-d].log"
+      console:
+        format: "logging.property.defaultFormat"
+        level: "debug"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+  # 错误日志报警
+  error:
+    async: true
+    level: "debug"
+    loggerType: "error"
+    output:
+      file:
+        fileName: "./log/error_[Y-m-d].log"
+        # 刷新到输出源 间隔时间
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      redis:
+        source: "caches.logger"
+        key: "error"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      console:
+        format: "logging.property.defaultFormat"
+        level: "debug"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+  # 任务类型日志类型
+  task:
+    async: true
+    level: "debug"
+    loggerType: "task"
+    output:
+      redis:
+        source: "caches.logger"
+        key: "task"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      file:
+        fileName: "./log/task_[Y-m-d].log"
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      console:
+        format: "logging.property.defaultFormat"
+        level: "debug"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144

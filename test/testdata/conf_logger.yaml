@@ -1,0 +1,160 @@
+version: v2
+logging:
+  # 变量值
+  property:
+    #   appId=%{appId} code=%{code} costTime=%{costTime} fileName=%{fileName} line=%{line} logLevel=%{logLevel} msg=%{msg} p=%{p} processCode=%{processCode} requestIp=%{requestIp} requestUri=%{requestUri} serviceName=%{serviceName} serviceSource=%{serviceSource} traceId=%{traceId} uid=%{uid}
+    defaultFormat: "appId=%{appId} serviceName=%{serviceName} serviceSource=%{serviceSource} traceId=%{traceId} fileName=%{fileName} line=%{line} requestIp=%{requestIp} requestUri=%{requestUri}"
+  default:
+    # 和output 字段对应
+    loggerType: "running"
+    async: true
+    level: "debug"
+    #  输出源配置，可以输出多个输出源
+    output:
+      # 文件输出源
+      file:
+        fileName: "./log/default_[Y-m-d].log"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      # redis 输出源
+      redis:
+        source: "caches.logger"
+        key: "running"
+        # 日志级别
+        level: "info"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      # console 输出源
+      console:
+        format: "logging.property.defaultFormat"
+        level: "debug"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+  # 开发日志类型
+  running:
+    async: false
+    level: "debug"
+    loggerType: "running"
+    output:
+      file:
+        fileName: "./log/running_[Y-m-d].log"
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+        # 100MB
+        maxSize: 1
+        # 1d 1天
+        maxAge: 1
+        # 最大备份
+        maxBackup: 10
+        # 日志轮换间隔
+        interval: "10m"
+        async: true
+        level: debug
+      redis:
+        source: "caches.logger"
+        # es index
+        key: "running"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      console:
+        format: "logging.property.defaultFormat"
+        level: "debug"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+  # 访问日志
+  access:
+    async: true
+    level: "debug"
+    loggerType: "access"
+    output:
+      redis:
+        source: "caches.logger"
+        key: "access"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      file:
+        fileName: "./log/access_[Y-m-d].log"
+      console:
+        format: "logging.property.defaultFormat"
+        level: "debug"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+  # 错误日志报警
+  error:
+    async: true
+    level: "debug"
+    loggerType: "error"
+    output:
+      file:
+        fileName: "./log/error_[Y-m-d].log"
+        # 刷新到输出源 间隔时间
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      redis:
+        source: "caches.logger"
+        key: "error"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      console:
+        format: "logging.property.defaultFormat"
+        level: "debug"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+  # 任务类型日志类型
+  task:
+    async: true
+    level: "debug"
+    loggerType: "task"
+    output:
+      redis:
+        source: "caches.logger"
+        key: "task"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      file:
+        fileName: "./log/task_[Y-m-d].log"
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
+      console:
+        format: "logging.property.defaultFormat"
+        level: "debug"
+        async: true
+        # 刷新到输出源 间隔时间，单位为秒
+        flushInterval: "5s"
+        # 缓冲区大小
+        bufferSize: 262144
